@@ -16,14 +16,14 @@ tags:
 #### 前言
 vPC是Cisco交换机虚拟化功能，能够在双上联非堆叠的情况下使用port channel的技术，当然我想看这编文章的人也相当清楚这个技术的原理和应用场景。
 
-#### 实验环境：
+#### 实验环境
 1. 模拟器 EVE-ng社区版
 
-#### 镜像：
+#### 镜像
 1. Cisco NX-OSv 9k-7.0.3.17.4
 2. i86bi_linux_l2-adventerprisek9-ms.SS
 
-#####拓扑图
+#### 拓扑图
 ![vpc topology](https://kdrdya.bn.files.1drv.com/y4mfKsPsBA3HhpZ7-0x9TFqqST4ME9AEPEXrI0TbcqAKmowXtMpdmpSK2KIOAtBy6HYughD_nN7Mwlv58lZk598g_tN9kQSFEfcstqGQAs4EcsYO_aqyKumR2bJjn39p_uELdhgrwMMJAeA6sdosUOqDX1z0y4C69pN67QHfKpdwPNgle5JJgQL4rX1QBYliawTFTxmsspR0hZjEaF9dvo-gw/vpc%20topo.png?psid=1 "vpc topology")
 
 #### 简单描述
