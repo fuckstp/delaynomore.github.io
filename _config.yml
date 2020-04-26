@@ -2,12 +2,12 @@
 title: i9u
 SEOTitle: Fuck STP
 header-img: img/post-bg-desk.jpg
-email: fuckstp@protomail.com
+email: fuckstp@protonmail.com
 description: "no stp no trouble."
 keyword: "CCIE,CCNA,CCNP,CISCO,Network,engineer,802.1d"
-url: "http://qiubaiying.github.io"          # your host, for absolute URL
+url: "https://fuckstp.github.io/"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/qiubaiying/qiubaiying.github.io.git" # you code repository
+github_repo: "https://github.com/fuckstp/fuckstp.github.io" # you code repository
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
@@ -77,8 +77,8 @@ disqus_username: i9u
 ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
-#ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-#ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
+ga_track_id: 'UA-113066427-2'            # Format: UA-xxxxxx-xx
+ga_domain: auto               # 默认的是 auto, 这里我是自定义了的域名，你如果没有自己的域名，需要改成auto
 
 
 
