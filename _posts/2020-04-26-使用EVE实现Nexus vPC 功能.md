@@ -24,7 +24,7 @@ vPC是Cisco交换机虚拟化功能，能够在双上联非堆叠的情况下使
 1. Cisco NX-OSv 9k-7.0.3.17.4
 2. i86bi_linux_l2-adventerprisek9-ms.SS
 
-镜像资源可以从以下帖子搜寻，按需下载并导入：
+镜像资源可以从这搜寻，按需下载并导入：
 [链接](http://www.emulatedlab.com/forum.php?mod=viewthread&tid=90 "链接")
 
 #### 拓扑图
