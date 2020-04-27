@@ -31,3 +31,108 @@ vPC是Cisco交换机虚拟化功能，能够在双上联非堆叠的情况下使
 2. E1/2-3则作为vPC peer link 用
 3. E1/4-5是属于vPC member port ，用于连接下挂的交换机。
 4. 配置port-channel mode的时候其实可以不使用LACP亦能够完成对接，这里的member port就使用静态的on模式，peer-link则使用LACP。
+
+#### 配置步骤
+1. 给mgmt口配置ip，并开启
+2. 划分vpc domain，配置peer-keepalive 目的ip和源ip
+3. 创建port-channel 20，并将E1/2-3划入port-channel 20，配置vpc peer-link
+4. 创建port-channel 2，并将E1/4-5划入port-channel 21，配置为vpc member角色，分配id21
+
+#### 配置
+
+```
+N9K-1
+feature vPC
+feature lacp
+
+interface mgmt0
+  vrf member management
+  ip address 100.1.1.1/24
+
+vPC domain 7
+  role priority 1
+  peer-keepalive destination 100.1.1.2 source 100.1.1.1
+
+interface port-channel20
+  switchport mode trunk
+  vPC peer-link
+
+interface Ethernet1/2
+  switchport mode trunk
+  channel-group 20 mode active
+
+interface Ethernet1/3
+  switchport mode trunk
+  channel-group 20 mode active
+
+interface port-channel2
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  vPC 21
+
+interface Ethernet1/4
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  channel-group 2
+
+interface Ethernet1/5
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  channel-group 2
+
+```
+```
+N9K-2
+feature vPC
+feature lacp
+
+interface mgmt0
+  vrf member management
+  ip address 100.1.1.2/24
+
+vPC domain 7
+  peer-keepalive destination 100.1.1.1 source 100.1.1.2
+
+interface port-channel20
+  switchport mode trunk
+  vPC peer-link
+
+interface Ethernet1/2
+  switchport mode trunk
+  channel-group 20 mode active
+
+interface Ethernet1/3
+  switchport mode trunk
+  channel-group 20 mode active
+
+interface port-channel2
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  vPC 21
+
+interface Ethernet1/4
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  channel-group 2
+
+interface Ethernet1/5
+  switchport mode trunk
+  switchport trunk allowed vlan 1,10,20,30
+  channel-group 2
+
+```
+```
+SW
+
+interface range Ethernet0/0-3
+ switchport trunk allowed vlan 1,10,20,30
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode on
+
+interface Port-channel2
+ switchport trunk allowed vlan 1,10,20,30
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+```
+
