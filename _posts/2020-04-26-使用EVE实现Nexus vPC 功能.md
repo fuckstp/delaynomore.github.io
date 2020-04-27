@@ -135,4 +135,21 @@ interface Port-channel2
  switchport trunk encapsulation dot1q
  switchport mode trunk
 ```
+#### 验证配置
+使用show vpc brief/show vpc con vpc [Virtual Port Channel number]来检查配置的结果：
+![vpc brief](https://lnrdya.bn.files.1drv.com/y4mtfj1us5xAOZc_rbc-VaAEI--NU5EV4051LpQQy08MCyK_NTrLdBupXUJGv4HLMW9qOEMhUMn1dTtfRBF4zbV2IG4Uzv0tq2ZsVaeOoCNfiVqR7ahpu3MAsBI8rZG9BPJ-9bU6He-7pFh2s3hbXOmMqQLC10b3RwBnXb70cO7_yeFd2vueVT9F0rmQ0myTM-pEIwy59r3697S9EqYlwzfcA/vpc-brief.png?psid=1 "vpc brief")
 
+使用show vpc consistency-parameters可以用来检查配置一致性是否正确：
+![vpc-con-par](https://k9rdya.bn.files.1drv.com/y4mGBFhgMM6BOHNgvZUakhWzl4xRkhXowlAmxwjRGyq1CXkcBBoUgLerxCDp0VwFlhoZKeLuqZa2f0ZVvzU7W1Yxg7IqcMI_ThDNkjcMFE4KLt_TvqBDkdjwbRjMFH7sBF_MP9X0HyyyxZB152xRMykt29rqqwF9V661mMGtghXdRf9VkFd-MO1W52OI6fZSbe2FTYWSaJmzTO2wxpuHzhI8Q/vpc-con-vpc.png?psid=1 "vpc-con-par")
+
+同样在N9K-2 上查看vpc brief和vpc  consistency-parameters：
+![n9k-2-vpcbrief](https://ntrdya.bn.files.1drv.com/y4m-kU1iUUrHhz0nwC6LwMpgHL7SBUOJToJB_k23fG0dhAJ17WhUZRDyYTcJsMLtXn76nHh86LkLvsYi1rrMKFinWjFo793eLmEfXRZnAy6HmSFHFWeLUgWbyLpBTK69O5RTvQo636H_5tagbXE2E2jFPI3af1x0-Cdu5qEl-013eH2LVU1Z4zH5KW9BxRqjb2K0a7x-t0tJXHirxjkNR0bNw/n9k-2.png?psid=1 "n9k-2-vpcbrief")
+
+![n9k-2-vpc-con-vpc](https://ndrdya.bn.files.1drv.com/y4mr4y3l6-SYGtTIx4WUSwG5k_xg1_GHU5gAV8yH5A38UQIVbW1WpeiBn1uqcvXycrfe7oeJDC-R10dA0E9TFEbG_sL-zAZUvQDYpsKW5rQrZNqd20b6Qq3qEjGu1VRw7sm14kKTUaEsfCGuwtOR7SD3Ch-7BU5KTQtH4UdBzLN6r5KSZNiG_M1GlOZKzK59UpmyNPMWpuAGPLRmft9MgVReQ/n9k-2-vpc-con-vpc.png?psid=1 "n9k-2-vpc-con-vpc")
+
+最后查看下挂的SW交换机port-channel 状态是否为“SU”
+
+![sw](https://ltpepq.bn.files.1drv.com/y4mDUbZHhOpsjoCxCBhuaKf23jD7X9Nf2mw0t44Gk1d3H58dMoHo1Kb0i6AXWVTE7tNZIbl0imOGATdSe_rcYRpjlMaqVY_u_YieVCM0Y8INpjlLvMPM3CsPPP95x7DvRDKwWkx_7b5oNaxor5XIzpviVjRwMbZEm4Oq5khc05fIDEsb9eAwkl6yA0CfTush65hnQub8uEEh4resTYp8beZuA/sw.png?psid=1 "sw")
+
+#### 最后
+EVE可以成功模拟出vPC的效果，同时不会有报错，但是我尝试的过程中发现如果和下挂的SW交换机各使用1条链路进行捆绑的时，会一直起不来。并且如果不是使用直连的mgmt口作为peer-keepalive的话，peer检测也会起不来。
