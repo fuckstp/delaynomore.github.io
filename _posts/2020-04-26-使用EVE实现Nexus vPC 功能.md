@@ -1,7 +1,7 @@
 ---
 layout:     post   				    
 title:      使用EVE实现Nexus vPC 功能 
-subtitle:   使用EVE实现Nexus vPC 功能
+subtitle:   模拟nxos的内存要求有点高
 date:       2020-04-26
 author:     i9u 						
 header-img: img/post-bg-2015.jpg 	
