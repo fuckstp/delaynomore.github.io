@@ -39,6 +39,8 @@ PE：每个AS域内与外部客户所连接的路由器，类如vISO2、vIOS7；
 
 P：不参与MPLS-VPN转发的路由器，类如vIOS3~6；
 
+ASBR：和其他AS域互联的路由器，类如：vIOS4、vIOS5
+
 CE：代表客户的路由器，类如vIOS1、vIOS8；
 
 接口及命名规则
