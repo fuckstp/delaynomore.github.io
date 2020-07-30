@@ -298,4 +298,8 @@ Ping和tracert一下~
 
 ![R1](https://l9pepq.bn.files.1drv.com/y4mMbpWHwlu3YAm_oQWyO-6iRS_A-Fu4dSAaUpAv81Qh5p3jD2peWU00smufqDpmOohNPOjbk1s3Z0eUG7qOwXIiiuepM0prsph59LxOcB-y6U7hdp0527OdifIU4uF2_FLOP94nsVktAL6sXI50OEFMkErNde1T1ICddL_ce2MUIg0j60xJGUzm5Hmu27p6D6ow5YUytNg_XTZq5Zd1lYpZw/ping-R8.PNG?psid=1)
 
-好了，通了就跑。
+从图中的traceroute结果可以得知在报文的传递过程中是含有双重标签的，内层标签一直是“25”，而外层标签一直随着传递的过程而不停改变。
+
+首先内层标签是关于去往目的地8.8.8.8的下一跳地址所被分配的标签，该标签由对端AS200PE所分配，并且通过send-labels特性传递到AS100。这也是为什么在Option C需要启用send-labels特性，因为默认LDP是不会为EBGP路由分配标签。
+
+其次外层标签是去往目的地8.8.8.8的下一跳地址的路由标签，这个标签是由传递路径中的设备所分配的本地标签。
