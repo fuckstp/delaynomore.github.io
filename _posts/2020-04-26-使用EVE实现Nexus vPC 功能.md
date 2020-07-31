@@ -13,36 +13,36 @@ tags:
 ## 使用EVE实现Nexus vPC 功能
 >这是我的第一篇博客。
 
-#### 前言
+#### 1.前言
 vPC是Cisco交换机虚拟化功能，能够在双上联非堆叠的情况下使用port channel的技术，当然我想看这编文章的人也相当清楚这个技术的原理和应用场景。使用EVE来做这个实验是不错的选择，前提是你的电脑内存要十分充足，因为一台NXOS的模拟设备就要分配出4G的内存空间，建议你至少拥有16G以上的内存。
 
-#### 实验环境
+#### 2.实验环境
 1. 模拟器 EVE-ng社区版
  [下载地址](https://t.co/uCYLdYerhL?amp=1 "下载地址")
 
-#### 镜像
+#### 3.镜像
 1. Cisco NX-OSv 9k-7.0.3.17.4
 2. i86bi_linux_l2-adventerprisek9-ms.SS
 
 镜像资源可以从这搜寻，按需下载并导入：
 [链接](http://www.emulatedlab.com/forum.php?mod=viewthread&tid=90 "链接")
 
-#### 拓扑图
+#### 4.拓扑图
 ![vpc topology](https://kdrdya.bn.files.1drv.com/y4mfKsPsBA3HhpZ7-0x9TFqqST4ME9AEPEXrI0TbcqAKmowXtMpdmpSK2KIOAtBy6HYughD_nN7Mwlv58lZk598g_tN9kQSFEfcstqGQAs4EcsYO_aqyKumR2bJjn39p_uELdhgrwMMJAeA6sdosUOqDX1z0y4C69pN67QHfKpdwPNgle5JJgQL4rX1QBYliawTFTxmsspR0hZjEaF9dvo-gw/vpc%20topo.png?psid=1 "vpc topology")
 
-#### 简单描述
+#### 5.简单描述
 1. Mgmt 0 口用作直连peer keep alive检测用
 2. E1/2-3则作为vPC peer link 用
 3. E1/4-5是属于vPC member port ，用于连接下挂的交换机。
 4. 配置port-channel mode的时候其实可以不使用LACP亦能够完成对接，这里的member port就使用静态的on模式，peer-link则使用LACP。
 
-#### 配置步骤
+#### 6.配置步骤
 1. 给mgmt口配置ip，并开启
 2. 划分vpc domain，配置peer-keepalive 目的ip和源ip
 3. 创建port-channel 20，并将E1/2-3划入port-channel 20，配置vpc peer-link
 4. 创建port-channel 2，并将E1/4-5划入port-channel 21，配置为vpc member角色，分配id21
 
-#### 配置
+#### 7.配置
 
 ```
 N9K-1
@@ -139,7 +139,7 @@ interface Port-channel2
  switchport trunk encapsulation dot1q
  switchport mode trunk
 ```
-#### 验证配置
+#### 8.验证配置
 ```
 使用
 show vpc brief
@@ -167,5 +167,5 @@ show etherchan sum
 ```
 ![sw](https://ltpepq.bn.files.1drv.com/y4mDUbZHhOpsjoCxCBhuaKf23jD7X9Nf2mw0t44Gk1d3H58dMoHo1Kb0i6AXWVTE7tNZIbl0imOGATdSe_rcYRpjlMaqVY_u_YieVCM0Y8INpjlLvMPM3CsPPP95x7DvRDKwWkx_7b5oNaxor5XIzpviVjRwMbZEm4Oq5khc05fIDEsb9eAwkl6yA0CfTush65hnQub8uEEh4resTYp8beZuA/sw.png?psid=1 "sw")
 
-#### 最后
+#### 9.最后
 EVE可以成功模拟出vPC的效果，同时不会有报错，但是我尝试的过程中发现如果和下挂的SW交换机各使用1条链路进行捆绑的时，会一直起不来。并且如果不是使用直连的mgmt口作为peer-keepalive的话，peer检测也会起不来。
