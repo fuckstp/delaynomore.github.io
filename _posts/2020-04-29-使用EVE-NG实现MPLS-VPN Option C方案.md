@@ -4,7 +4,7 @@ title:      使用EVE-NG实现MPLS-VPN Option C方案
 subtitle:   控制层面有点复杂
 date:       2020-04-29
 author:     i9u
-header-img: img/home-bg-art.jpg
+header-img: img/home-bg-art1.jpg
 catalog: true
 tags:
     - EVE-NG
