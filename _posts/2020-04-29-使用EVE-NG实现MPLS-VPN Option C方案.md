@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      使用EVE-NG实现MPLS-VPN Option C方案
-subtitle:   控制层面有点复杂
+subtitle:   没你想象的复杂，重点是Send-labels特性。
 date:       2020-04-29
 author:     i9u
 header-img: img/home-bg-art1.jpg
