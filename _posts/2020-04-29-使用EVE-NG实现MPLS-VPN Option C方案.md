@@ -15,19 +15,19 @@ tags:
 >起因是《segment routing 卷一》看到了MPLS-BGP控制层面有点糊涂了，大概是考完试就没有碰MPLS的原因，把大部分的理论都忘光光，然后把Option A、B、C重新复习了一边。
 
 
-#### 前言
+#### 1.前言
 MPLS-VPN Option C 方案的优缺点这里就不提了，让我们直接实验的过程中回想起MPLS和跨域的工作方法吧。
 
-#### 实验环境
+#### 2.实验环境
 1. 模拟器 EVE-NG社区版 （[下载地址](https://t.co/uCYLdYerhL?amp=1 "下载地址")）
 
-#### 镜像
+#### 3.镜像
 1. vios-adventerprisek9-m
 2. 镜像系统版本Version 15.7(3)M3, RELEASE SOFTWARE (fc2)
 
 镜像资源可以从这搜寻，按需下载并导入：[链接](http://www.emulatedlab.com/forum.php?mod=viewthread&tid=90 "链接")
 
-#### 拓扑图
+#### 4.拓扑图
 
 ![topology](https://ktpepq.bn.files.1drv.com/y4mAjWfVtyzYiQmsLlyVp_LHsC_S-iWcxGgbvWm0xptnnD0DVzD7G_muswqq1qtNnHI_jnlSYXDlWhLSpnHe1q-Kc1aI_3g5GR1HBUcwTB6f6wbaykVT5mg5FPZcB5-s7AomgbebeqenKINxUrPn6YxZkGfHEGv-FHXLgi6A2BB7QMAuwV9e71vkCvTmQT0PYvbky1F-SDrIIjzqvSGYQW2tQ/topology.PNG?psid=1)
 
@@ -59,13 +59,13 @@ CE：代表客户的路由器，类如vIOS1、vIOS8；
 
 
 
-#### 配置过程
+#### 5.配置过程
 
-##### 接口
+##### 5.1接口
 
 这里略高
 
-##### IGP/LDP
+##### 5.2IGP/LDP
 
 这里也略过，毕竟都谈到Option C了，BGP作为TCP路由协议需要依靠IGP来作为底层打通可达才能建立邻居，这一点你该不会不知道吧。
 
@@ -81,7 +81,7 @@ interface [接口]
  mpls ip
 ```
 
-##### VRF
+##### 5.3VRF
 
 两台PE需要建立VRF来接收CE发过来的路由，打上标签后形成VPNV4路由并装入VRF 路由表。fuckstp是VRF的名字，rd10:10 用来区分CE发过来的私网路由，route-target（RT）则用来区分从PE发过来的vpnv4路由，这里由于是代表同一个客户的两个分支点之间的路由，所以RD\RT都是一样。
 
@@ -102,7 +102,7 @@ interface GigabitEthernet0/0
 !
 ```
 
-##### BGP
+##### 5.4BGP
 
 CE需要发送路由到PE，方法有可以选择静态、IGP、BGP，这里选用BGP来和PE建立邻居发送路由
 
@@ -193,7 +193,7 @@ router bgp 200
  exit-address-family
 ```
 
-##### 验证配置
+##### 5.5验证配置
 
 使用下面的命令来验证邻居是否建立成功、路由表是否有路由
 
@@ -290,7 +290,7 @@ C        78.1.1.0/24 is directly connected, GigabitEthernet0/0
 L        78.1.1.8/32 is directly connected, GigabitEthernet0/0
 ```
 
-#### 测试连通性
+#### 6.测试连通性
 
 Ping和tracert一下~
 
