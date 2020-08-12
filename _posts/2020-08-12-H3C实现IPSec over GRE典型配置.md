@@ -1,15 +1,17 @@
 ---
 layout:     post
-title:      H3C路由器实现IPSec over GRE典型配置
-subtitle:   
-date:       2020-08-12
+title:      什么是SDN？
+subtitle:    VMware笑到最后
+date:       2020-08-11
 author:     i9u
-header-img: img/home-bg-art1.jpg
+header-img: img/Ec5R55jWkAAssjO-min.png
 catalog: true
 tags:
-    - EVE-NG
-    - IPSec over GRE
+    - H3C
+    - IPSec
+    - GRE
     - VPN
+    - 配置案例
 ---
 
 # H3C实现IPSec over GRE典型配置
