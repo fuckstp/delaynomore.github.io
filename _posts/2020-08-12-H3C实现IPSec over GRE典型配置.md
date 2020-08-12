@@ -63,7 +63,7 @@ interface GigabitEthernet0/1
 #
 ```
 
-Route B：
+Route C：
 
 ```
 
@@ -79,7 +79,7 @@ interface GigabitEthernet0/1
 #
 ```
 
-Route C：
+Route B：
 
 ```
 #
