@@ -12,7 +12,7 @@ tags:
     - VPN
 ---
 
-# H3C路由器实现IPSec over GRE典型配置
+# H3C实现IPSec over GRE典型配置
 
 Router A和Router B之间建立GRE隧道，Router A和Router B下的PC网段间流量走GRE，并使用IPSec对在GRE中对流量进行加密，Route C则模拟在ISP侧的设备。
 
