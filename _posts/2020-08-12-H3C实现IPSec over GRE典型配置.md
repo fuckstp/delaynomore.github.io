@@ -207,7 +207,7 @@ interface Tunnel0 mode gre
 
 我们直接ping下，会发现IPSec第一个包都会超时，这是正常的，只要通了那就代表配置没错了。
 
-<img src="C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200812153509793.png" alt="image-20200812153509793" style="zoom:67%;" />
+<img src="https://cdn.jsdelivr.net/gh/fuckstp/fuckstp.github.io@master/img/sdn/image-20200812153509793.png" alt="image-20200812153509793" style="zoom:67%;" />
 
 由于Router A和Router B内网的流量已在ACL中定义为需加密保护的流量，因此将触发IPsec进行加密。可以通过如下显示信息看到，IKE协商成功，生成了SA。
 
