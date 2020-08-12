@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      什么是SDN？
-subtitle:    VMware笑到最后
-date:       2020-08-11
+title:      H3C实现IPSec over GRE典型配置
+subtitle:   使用的模拟器是H3C的官方模拟器HCL，可以从它的官网处下载。
+date:       2020-08-12
 author:     i9u
 header-img: img/Ec5R55jWkAAssjO-min.png
 catalog: true
