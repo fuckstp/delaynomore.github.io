@@ -183,8 +183,6 @@ ipsec policy 123 1 isakmp
  security acl 3000
  remote-address 172.16.1.1
 #
-ike profile test
-#
 ike keychain 1
  pre-shared-key address 172.16.1.1 255.255.255.255 key cipher simply 123
 
