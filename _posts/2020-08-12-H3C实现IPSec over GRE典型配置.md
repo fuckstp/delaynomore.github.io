@@ -307,3 +307,167 @@ GRE封装后，依然能抓包软件识别出是ICMP报文：
 GRE+IPSec封装后，由于被加密，被识别成ESP。：
 
 ![image-20200821121147484](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821121147484.png)
+
+## 6.改用GRE over IPSec方案
+
+GRE over IPSec技术是使用IPSec对已经被GRE封装的数据包进行封装。GRE over IPSec在物理接口上实现IPSec加密。系统检测需要在物理接口上加密的GRE数据流（配置一个ACL，以匹配两个网关之间的GRE数据流）。这样一来，所有通过GRE隧道传输的数据流都受到IPSec的保护。GRE隧道在设置时也受到IPSec的保护。
+
+GRE over IPSec支持隧道和传输模式下的封装。在隧道模式下，IPSec数据包头被插入到数据包中。因此，数据包的长度较长，而且往往会被碎片化。建议使用传输模式来防止不必要的碎片。
+
+也就是说，只需要在原本的方案上稍微修改下pre-shared-key和remote-address的地址为物理接口IP，并且在物理接口上调用，那就变成GRE先封装，IPSec后封装的方案。
+
+### 6.1配置修改
+
+
+
+Route A：
+
+```
+acl advanced 3000
+ rule 0 permit ip source 10.1.1.2 32 destination 20.1.1.2 32
+#
+ipsec transform-set 123
+ esp encryption-algorithm 3des-cbc
+ esp authentication-algorithm md5
+#
+ipsec policy 123 1 isakmp
+ transform-set 123
+ security acl 3000
+ remote-address 20.1.1.2
+#
+ike keychain 1
+ pre-shared-key address 20.1.1.2 255.255.255.255 key simply 123
+#
+interface GigabitEthernet0/0
+ipsec apply policy 123
+
+```
+
+Route B：
+
+```
+acl advanced 3000
+ rule 0 permit ip source 20.1.1.2 32 destination 10.1.1.2 32
+#
+ipsec transform-set 123
+ esp encryption-algorithm 3des-cbc
+ esp authentication-algorithm md5
+#
+ipsec policy 123 1 isakmp
+ transform-set 123
+ security acl 3000
+ remote-address 20.1.1.2
+#
+ike keychain 1
+ pre-shared-key address 20.1.1.2 255.255.255.255 key simply 123
+#
+interface GigabitEthernet0/0
+ipsec apply policy 123
+```
+
+### 6.2 验证结果
+
+```
+[H3C]dis ike sa
+    Connection-ID   Remote                Flag         DOI
+------------------------------------------------------------------
+    10              20.1.1.2              RD           IPsec
+Flags:
+RD--READY RL--REPLACED FD-FADING RK-REKEY
+
+```
+
+```
+[H3C]dis ipsec sa
+-------------------------------
+Interface: GigabitEthernet0/0
+-------------------------------
+
+  -----------------------------
+  IPsec policy: 123
+  Sequence number: 1
+  Mode: ISAKMP
+  -----------------------------
+    Tunnel id: 0
+    Encapsulation mode: tunnel
+    Perfect Forward Secrecy:
+    Inside VPN:
+    Extended Sequence Numbers enable: N
+    Traffic Flow Confidentiality enable: N
+    Path MTU: 1444
+    Tunnel:
+        local  address: 10.1.1.2
+        remote address: 20.1.1.2
+    Flow:
+        sour addr: 10.1.1.2/255.255.255.255  port: 0  protocol: ip
+        dest addr: 20.1.1.2/255.255.255.255  port: 0  protocol: ip
+
+    [Inbound ESP SAs]
+      SPI: 3221028236 (0xbffcfd8c)
+      Connection ID: 98784247808
+      Transform set: ESP-ENCRYPT-3DES-CBC ESP-AUTH-MD5
+      SA duration (kilobytes/sec): 1843200/3600
+      SA remaining duration (kilobytes/sec): 1843199/3419
+      Max received sequence-number: 9
+      Anti-replay check enable: Y
+      Anti-replay window size: 64
+      UDP encapsulation used for NAT traversal: N
+      Status: Active
+
+    [Outbound ESP SAs]
+      SPI: 3175456113 (0xbd459d71)
+      Connection ID: 193273528321
+      Transform set: ESP-ENCRYPT-3DES-CBC ESP-AUTH-MD5
+      SA duration (kilobytes/sec): 1843200/3600
+      SA remaining duration (kilobytes/sec): 1843198/3419
+      Max sent sequence-number: 10
+      UDP encapsulation used for NAT traversal: N
+      Status: Active
+
+  -----------------------------
+  IPsec policy: 123
+  Sequence number: 1
+  Mode: ISAKMP
+  -----------------------------
+    Tunnel id: 0
+    Encapsulation mode: tunnel
+    Perfect Forward Secrecy:
+    Inside VPN:
+    Extended Sequence Numbers enable: N
+    Traffic Flow Confidentiality enable: N
+    Path MTU: 1444
+    Tunnel:
+        local  address: 10.1.1.2
+        remote address: 20.1.1.2
+    Flow:
+        sour addr: 10.1.1.2/255.255.255.255  port: 0  protocol: ip
+        dest addr: 20.1.1.2/255.255.255.255  port: 0  protocol: ip
+
+    [Inbound ESP SAs]
+      SPI: 2902764455 (0xad04aba7)
+      Connection ID: 12884901891
+      Transform set: ESP-ENCRYPT-3DES-CBC ESP-AUTH-MD5
+      SA duration (kilobytes/sec): 1843200/3600
+      SA remaining duration (kilobytes/sec): 1843197/3469
+      Max received sequence-number: 28
+      Anti-replay check enable: Y
+      Anti-replay window size: 64
+      UDP encapsulation used for NAT traversal: N
+      Status: Active
+
+    [Outbound ESP SAs]
+      SPI: 2962522711 (0xb0948257)
+      Connection ID: 12884901890
+      Transform set: ESP-ENCRYPT-3DES-CBC ESP-AUTH-MD5
+      SA duration (kilobytes/sec): 1843200/3600
+      SA remaining duration (kilobytes/sec): 1843196/3469
+      Max sent sequence-number: 30
+      UDP encapsulation used for NAT traversal: N
+      Status: Active
+
+```
+
+IPSec+GRE的封装后，抓包除了能看出源目IP和使用了ESP加密外，什么也看不到：
+
+![image-20200821154504018](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821154504018.png)
+
