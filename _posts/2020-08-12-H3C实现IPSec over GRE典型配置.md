@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      H3C实现IPsec over GRE典型配置
+title:      H3C实现IPSec over GRE典型配置
 subtitle:   使用的模拟器是H3C的官方模拟器HCL，可以从它的官网处下载。
 date:       2020-08-12
 author:     i9u
@@ -14,15 +14,15 @@ tags:
     - 配置案例
 ---
 
-# H3C实现IPsec over GRE典型配置
+# H3C实现IPSec over GRE典型配置
 
-Router A和Router B之间建立GRE隧道，Router A和Router B下的PC网段间流量走GRE，并使用IPSec对在GRE中对流量进行加密，Route C则模拟在ISP侧的设备。
+IPSec over GRE 指使用GRE对使用IPSec封装的数据包进行封装，IPSec over GRE在隧道接口上实现IPSec加密。系统检测隧道接口上需要加密的数据流（配置一个ACL来匹配两个用户网段之间的数据流）。匹配ACL的任何数据包都会被封装成IPSec数据包，然后在通过隧道传输之前封装成GRE数据包。与ACL不匹配的数据包会直接在GRE隧道中传输，而不会使用IPSec进行封装，这意味着这些数据包的传输方式并不安全。此外，GRE隧道在设置时不受IPSec保护。
 
-
-
-
+你可以认为IPSec over GRE的安全性是不全面的，因为它只会加密被ACL所匹配的流量，隧道的建立过程没有加密，没被匹配到的流量不会被加密。
 
 ## 0.实验环境
+
+Router A和Router B之间建立GRE隧道，Router A和Router B下的PC网段间流量走GRE，并使用IPSec对在GRE中对流量进行加密，Route C则模拟在ISP侧的设备。
 
 模拟器：H3C官方模拟器HCL，即H3C Cloud Lab
 
@@ -298,3 +298,12 @@ Output: 1699 packets, 120360 bytes, 0 drops
 
 ```
 
+
+
+GRE封装后，依然能抓包软件识别出是ICMP报文：
+
+![image-20200821121125152](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821121125152.png)
+
+GRE+IPSec封装后，由于被加密，被识别成ESP。：
+
+![image-20200821121147484](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821121147484.png)
