@@ -302,11 +302,11 @@ Output: 1699 packets, 120360 bytes, 0 drops
 
 GRE封装后，依然能抓包软件识别出是ICMP报文：
 
-![image-20200821121125152](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821121125152.png)
+![image-20200821121125152](https://cdn.jsdelivr.net/gh/fuckstp/fuckstp.github.io@master/img/snd/image-20200821121125152.png)
 
 GRE+IPSec封装后，由于被加密，被识别成ESP。：
 
-![image-20200821121147484](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821121147484.png)
+![image-20200821121147484](https://cdn.jsdelivr.net/gh/fuckstp/fuckstp.github.io@master/img/snd/image-20200821121147484.png)
 
 ## 6.改用GRE over IPSec方案
 
@@ -469,5 +469,5 @@ Interface: GigabitEthernet0/0
 
 IPSec+GRE的封装后，抓包除了能看出源目IP和使用了ESP加密外，什么也看不到：
 
-![image-20200821154504018](C:\Users\SYUU\AppData\Roaming\Typora\typora-user-images\image-20200821154504018.png)
+![image-20200821154504018](https://cdn.jsdelivr.net/gh/fuckstp/fuckstp.github.io@master/img/snd/image-20200821154504018.png)
 
