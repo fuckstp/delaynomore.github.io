@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      Virtual lan
-subtitle:   还没想好写什么
+title:      Virtual lan(VLAN)
+subtitle:   2020年都要过完了，我还没找到可以跳槽的工作。
 date:       2020-12-29
 author:     i9u
-header-img: img/EiAbWPnU4AAhLSA.jpg
+header-img: img/EiAbsj4UwAADTNF.jpeg
 catalog: true
 tags:
     - layer 2
